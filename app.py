@@ -85,13 +85,17 @@ motivational_quote = random.choice(quotes)
 st.markdown('<p class="title">🌱 Growth Mindset Challenge</p>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">Start your journey towards a growth mindset today!</p>', unsafe_allow_html=True)
 
-# Challenge Section
+# Section: User's Own Challenge
+st.subheader("✍️ Create Your Own Challenge")
+user_challenge = st.text_input("Write your own challenge for today:")
+
+# Section: Predefined Challenge & Motivation
 col1, col2 = st.columns(2)
 
 with col1:
     st.markdown('<div class="box">', unsafe_allow_html=True)
     st.subheader("✨ Today's Challenge")
-    st.write(f"👉 **{daily_challenge}**")
+    st.write(f"👉 **{user_challenge if user_challenge else daily_challenge}**")
     st.markdown("</div>", unsafe_allow_html=True)
 
 with col2:
@@ -115,13 +119,45 @@ if st.button("Submit Reflection", key="reflection_submit"):
     else:
         st.warning("⚠️ Please write something before submitting.")
 
-# Challenge History (Optional Feature)
+# Section: Overcome Challenge
+st.subheader("💪 Overcome Challenge")
+overcome_challenge = st.text_area("Write about a past challenge you have overcome:", height=150)
+
+if st.button("Save Overcome Challenge", key="overcome_submit"):
+    if overcome_challenge.strip():
+        st.success("🎉 Well done! Overcoming challenges makes you stronger! 💪")
+    else:
+        st.warning("⚠️ Please write something before submitting.")
+
+# Section: Celebrate Achievements
+st.subheader("🎉 Celebrate Achievements")
+achievement = st.text_area("Write about something you achieved recently:", height=150)
+
+if st.button("Save Achievement", key="achievement_submit"):
+    if achievement.strip():
+        st.success("🥳 Awesome! Celebrate every success, big or small! 🎊")
+    else:
+        st.warning("⚠️ Please write something before submitting.")
+
+# Section: Inspiration
+st.subheader("🌟 Inspiration")
+st.write("🔹 **What inspires you?** Write about a person, book, or experience that keeps you motivated.")
+
+inspiration = st.text_area("Write your source of inspiration:", height=150)
+
+if st.button("Save Inspiration", key="inspiration_submit"):
+    if inspiration.strip():
+        st.success("💡 Keep this inspiration close to your heart! 🚀")
+    else:
+        st.warning("⚠️ Please write something before submitting.")
+
+# Challenge History
 st.subheader("📜 Previous Challenges")
 if "history" not in st.session_state:
     st.session_state.history = []
     
 if st.button("Save Today's Challenge"):
-    st.session_state.history.append(daily_challenge)
+    st.session_state.history.append(user_challenge if user_challenge else daily_challenge)
     
 if st.session_state.history:
     for idx, past_challenge in enumerate(reversed(st.session_state.history), 1):
@@ -129,5 +165,5 @@ if st.session_state.history:
 
 # Footer
 st.markdown("---")
-st.write("💖 Keep embracing challenges and growing every day!")
+st.markdown('<p style="text-align: center; font-size: 18px;">The app is created by <b>Tanzeel Sarwar</b> 💡</p>', unsafe_allow_html=True)
 
